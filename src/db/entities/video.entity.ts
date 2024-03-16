@@ -6,12 +6,13 @@ import {
   ManyToOne,
   OneToMany,
 } from 'typeorm';
-import { Comment } from './Comment';
-import { Channel } from './Channel';
+import { ChannelEntity } from './channel.entity';
+import { CommentEntity } from './comment.entity';
+
 
 @Index('channelId', ['channelId'], {})
 @Entity('Video', { schema: 'youtube' })
-export class Video {
+export class VideoEntity {
   @Column('varchar', { primary: true, name: 'id', length: 255 })
   id: string;
 
@@ -64,13 +65,13 @@ export class Video {
   @Column('text', { name: 'speechText', nullable: true })
   speechText: string | null;
 
-  @OneToMany(() => Comment, (comment) => comment.video)
-  comments: Comment[];
+  @OneToMany(() => CommentEntity, (comment) => comment.video)
+  comments: CommentEntity[];
 
-  @ManyToOne(() => Channel, (channel) => channel.videos, {
+  @ManyToOne(() => ChannelEntity, (channel) => channel.videos, {
     onDelete: 'CASCADE',
     onUpdate: 'NO ACTION',
   })
   @JoinColumn([{ name: 'channelId', referencedColumnName: 'id' }])
-  channel: Channel;
+  channel: ChannelEntity;
 }

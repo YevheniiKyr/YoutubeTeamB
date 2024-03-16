@@ -1,8 +1,8 @@
 import { Column, Entity, OneToMany } from 'typeorm';
-import { Video } from './Video';
+import { VideoEntity } from './video.entity';
 
 @Entity('Channel', { schema: 'youtube' })
-export class Channel {
+export class ChannelEntity {
   @Column('varchar', { primary: true, name: 'id', length: 255 })
   id: string;
 
@@ -33,6 +33,6 @@ export class Channel {
   @Column('int', { name: 'videoCount', nullable: true })
   videoCount: number | null;
 
-  @OneToMany(() => Video, (video) => video.channel)
-  videos: Video[];
+  @OneToMany(() => VideoEntity, (video) => video.channel)
+  videos: VideoEntity[];
 }
