@@ -4,6 +4,7 @@ import { CommentRepository } from './db/repositories/comment.repository';
 import { ChannelRepository } from './db/repositories/channel.repository';
 import { VideoRepository } from './db/repositories/video.repository';
 import { DataExtractionModule } from './modules/data-extraction/data-extraction.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
   imports: [

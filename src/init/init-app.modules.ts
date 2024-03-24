@@ -13,7 +13,7 @@ export const initAppModules = [
             entities: [__dirname + '/../**/*.entity.{js,ts}'],
             synchronize: false,
             logging: false,
-            autoLoadEntities: false,
+            autoLoadEntities: true,
         }),
       }),
 ]
