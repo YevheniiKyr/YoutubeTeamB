@@ -2,13 +2,19 @@ import { Injectable } from "@nestjs/common";
 import { ChannelRepository } from "src/db/repositories/channel.repository";
 import { CommentRepository } from "src/db/repositories/comment.repository";
 import { VideoRepository } from "src/db/repositories/video.repository";
-import { HttpService } from "@nestjs/axios";
 import { youtubeConfig } from "src/configs/youtube.config";
 import { youtube_v3 } from 'googleapis';
 import { ChannelEntity } from "src/db/entities/channel.entity";
 import { VideoEntity } from "src/db/entities/video.entity";
 import { CommentEntity } from "src/db/entities/comment.entity";
+/*
+    Example of usage
 
+    await app.get(DataExtractionService).saveYoutubeDataToDBByDateRange(
+        new Date('2024-03-21T10:00:26.000Z'),
+        new Date(Date.now())
+    ).then(console.log)
+*/
 @Injectable()
 export class DataExtractionService {
     private youtubeApi: youtube_v3.Youtube;
@@ -20,7 +26,6 @@ export class DataExtractionService {
         this.youtubeApi = new youtube_v3.Youtube({
             auth: youtubeConfig.youtubeApiKey
         });
-        channelRepository.count().then(console.log)
     }
 
     async saveYoutubeDataToDBByDateRange(startDate: Date, endDate: Date) {
@@ -38,7 +43,7 @@ export class DataExtractionService {
         
     }
 
-    async saveYoutubeDataForOneChannel(channel: youtube_v3.Schema$Channel) {
+    private async saveYoutubeDataForOneChannel(channel: youtube_v3.Schema$Channel) {
         
         
         const channelEntity = new ChannelEntity();
@@ -51,11 +56,11 @@ export class DataExtractionService {
         channelEntity.customUrl = channel.snippet.customUrl;
         channelEntity.subscriberCount = +channel.statistics.subscriberCount;
         channelEntity.id = channel.id;
-        return console.log(channelEntity);
         this.channelRepository.save(channelEntity);
 
     }
-    async saveYoutubeDataForVideos(videos: youtube_v3.Schema$Video[]) {
+
+    private async saveYoutubeDataForVideos(videos: youtube_v3.Schema$Video[]) {
         const entities = videos.map((video)=>{
             const videoEntity = new VideoEntity();
             videoEntity.id = video.id;
@@ -63,7 +68,7 @@ export class DataExtractionService {
             videoEntity.commentCount = +video.statistics.commentCount;
             videoEntity.defaultAudioLanguage = video.snippet.defaultAudioLanguage;
             videoEntity.descriptionVideo = video.snippet.description;
-            videoEntity.dislikeCount = +video.statistics.dislikeCount;
+            videoEntity.dislikeCount = +(video.statistics.dislikeCount || 0);
             videoEntity.likeCount = +video.statistics.likeCount;
             videoEntity.favoriteCount = +video.statistics.favoriteCount;
             videoEntity.publishedAt = new Date(video.snippet.publishedAt);
@@ -73,11 +78,13 @@ export class DataExtractionService {
             videoEntity.viewCount = video.statistics.viewCount;
             return videoEntity;
         });
-        return console.log(entities);
-        return this.channelRepository.save(entities);
+        console.log(videos)
+        console.log(entities)
+        return this.videoRepository.save(entities);
 
     }
-    async saveYoutubeDataForComments(comments: youtube_v3.Schema$Comment[]) {
+    
+    private async saveYoutubeDataForComments(comments: youtube_v3.Schema$Comment[]) {
         const entities = comments.map((comment)=>{
             const commentEntity = new CommentEntity();
             commentEntity.likeCount = comment.snippet.likeCount;
@@ -89,11 +96,10 @@ export class DataExtractionService {
             commentEntity.videoId = comment.snippet.videoId;
             return commentEntity;
         });
-        return console.log(entities);
-        return this.channelRepository.save(entities);
+        return this.commentRepository.save(entities);
     }
 
-    async saveVideosByChannel(channelId: string, startDate: Date, endDate: Date) {
+    private async saveVideosByChannel(channelId: string, startDate: Date, endDate: Date) {
         const videos: Promise<youtube_v3.Schema$Video[]>[] = []
         let pageToken;
         do {
@@ -109,7 +115,7 @@ export class DataExtractionService {
         return (await Promise.all(videos)).flatMap(arr=>arr);
     }
 
-    async saveCommentsByVideos(videoId: string) {
+    private async saveCommentsByVideos(videoId: string) {
         let pageToken;
         do {
             const [videosData, newPageToken] = await this.getCommentsByPage(videoId, pageToken);
@@ -118,7 +124,7 @@ export class DataExtractionService {
         } while(pageToken);
     }
 
-    async getCommentsByPage(videoId: string, pageToken?: string) {
+    private async getCommentsByPage(videoId: string, pageToken?: string) {
         const { data } = await this.youtubeApi.commentThreads.list({
             part: ['replies', 'snippet'],
             videoId,
@@ -134,7 +140,7 @@ export class DataExtractionService {
     }
 
 
-    async getVideosByPage(channelId: string, startDate: Date, endDate: Date, pageToken?: string): Promise<[
+    private async getVideosByPage(channelId: string, startDate: Date, endDate: Date, pageToken?: string): Promise<[
         Promise<youtube_v3.Schema$Video[]>, 
         string
     ]> {

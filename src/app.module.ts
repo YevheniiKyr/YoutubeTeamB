@@ -5,17 +5,14 @@ import { ChannelRepository } from './db/repositories/channel.repository';
 import { VideoRepository } from './db/repositories/video.repository';
 import { DataExtractionModule } from './modules/data-extraction/data-extraction.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { DatabaseModule } from './db/database.module';
 
 @Module({
   imports: [
-    ...initAppModules,
+    DatabaseModule,
     DataExtractionModule
   ],
   controllers: [],
-  providers: [
-    CommentRepository,
-    ChannelRepository,
-    VideoRepository
-  ],
+  providers: [],
 })
 export class AppModule {}
