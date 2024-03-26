@@ -1,10 +1,9 @@
 import { Module } from "@nestjs/common";
-import { ConfigModule } from "@nestjs/config";
 
 import { AudioTranscriptionService } from "./audio-transcription.service";
 
 @Module({
-    imports: [ConfigModule],
+    imports: [],
     controllers: [],
     providers: [
         AudioTranscriptionService,

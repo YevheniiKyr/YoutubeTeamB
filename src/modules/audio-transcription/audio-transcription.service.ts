@@ -2,13 +2,14 @@ import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import * as Deepgram from '@deepgram/sdk';
 import { DeepgramClient } from '@deepgram/sdk';
+import { deepgramConfig } from "src/configs/deepgram.config";
 
 @Injectable()
 export class AudioTranscriptionService {
     private readonly deepgram: DeepgramClient;
 
     constructor(private configService: ConfigService) {
-        this.deepgram = Deepgram.createClient(configService.get<string>('DEEPGRAM_API_KEY'));
+        this.deepgram = Deepgram.createClient(deepgramConfig.apiKey);
     }
 
     async transcribeAudioByUrl(url: string, language: string) {
