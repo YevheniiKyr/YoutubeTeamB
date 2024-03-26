@@ -27,14 +27,14 @@ export default class ChannelController {
   @Get('/avg-comment-count')
   async getAverageCommentCount(
     @Query('channelId') channelId: string,
-  ): Promise<number> {
+  ): Promise<{ count: number }> {
     return this.channelService.getAverageCommentCount(channelId);
   }
 
   @Get('/avg-likes-dislikes-ratio')
   async getAverageLikesDislikesRatio(
     @Query('channelId') channelId: string,
-  ): Promise<number> {
+  ): Promise<{ ratio: number }> {
     return this.channelService.getAverageLikesDislikesRatio(channelId);
   }
 
@@ -43,7 +43,7 @@ export default class ChannelController {
     @Query('country') countryCode: string,
     @Query('startDate') startDate?: string,
     @Query('endDate') endDate?: string,
-  ): Promise<number> {
+  ): Promise<{ count: number }> {
     return this.channelService.getVideoCount(countryCode, startDate, endDate);
   }
 
@@ -61,7 +61,7 @@ export default class ChannelController {
     @Query('country') countryCode: string,
     @Query('startDate') startDate?: string,
     @Query('endDate') endDate?: string,
-  ): Promise<number> {
+  ): Promise<{ views: number }> {
     return this.channelService.getAllViews(countryCode, startDate, endDate);
   }
 

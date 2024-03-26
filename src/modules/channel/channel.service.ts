@@ -31,15 +31,19 @@ export class ChannelService {
     });
   }
 
-  public async getAverageCommentCount(channelId: string): Promise<number> {
-    return this.videoRepository.average('commentCount', {
+  public async getAverageCommentCount(
+    channelId: string,
+  ): Promise<{ count: number }> {
+    const count = await this.videoRepository.average('commentCount', {
       channelId,
     });
+
+    return { count };
   }
 
   public async getAverageLikesDislikesRatio(
     channelId: string,
-  ): Promise<number> {
+  ): Promise<{ ratio: number }> {
     const averageLikesCount = await this.videoRepository.average('likeCount', {
       channelId,
     });
@@ -54,14 +58,14 @@ export class ChannelService {
       return null;
     }
 
-    return averageLikesCount / averageDislikesCount;
+    return { ratio: averageLikesCount / averageDislikesCount };
   }
 
   public async getVideoCount(
     countryCode: string,
     startDate?: string,
     endDate?: string,
-  ) {
+  ): Promise<{ count: number }> {
     const query = this.videoRepository
       .createQueryBuilder('video')
       .innerJoin('video.channel', 'channel')
@@ -75,7 +79,9 @@ export class ChannelService {
       query.andWhere('video.recordingDate < :endDate', { endDate });
     }
 
-    return query.getCount();
+    const count = await query.getCount();
+
+    return { count };
   }
 
   public async getAllVideos(
@@ -102,7 +108,7 @@ export class ChannelService {
     countryCode: string,
     startDate?: string,
     endDate?: string,
-  ): Promise<number> {
+  ): Promise<{ views: number }> {
     const qb = this.videoRepository
       .createQueryBuilder('video')
       .innerJoin('video.channel', 'channel')
@@ -116,7 +122,11 @@ export class ChannelService {
       qb.andWhere('video.recordingDate < :endDate', { endDate });
     }
 
-    return qb.select('SUM(video.views)', 'totalViews').getRawOne();
+    const totalViews = await qb
+      .select('SUM(video.views)', 'totalViews')
+      .getRawOne();
+
+    return { views: totalViews };
   }
 
   public async getAllComments(
