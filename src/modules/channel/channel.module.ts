@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
-import { DataExtractionModule } from '../data-extraction/data-extraction.module';
+import ChannelController from './channel.controller';
+import { ChannelService } from './channel.service';
 
 @Module({
-  imports: [DataExtractionModule],
-  controllers: [],
-  providers: [],
+  imports: [],
+  controllers: [ChannelController],
+  providers: [ChannelService],
 })
 export class ChannelModule {}
