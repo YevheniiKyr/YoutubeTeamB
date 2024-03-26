@@ -4,6 +4,7 @@ import { DataExtractionModule } from './modules/data-extraction/data-extraction.
 import { DatabaseModule } from './db/database.module';
 import { AudioTranscriptionModule } from './modules/audio-transcription/audio-transcription.module';
 import { CronModule } from './modules/cron/cron.module';
+import { ChannelModule } from './modules/channel/channel.module';
 
 @Module({
   imports: [
@@ -11,6 +12,7 @@ import { CronModule } from './modules/cron/cron.module';
     DatabaseModule,
     DataExtractionModule,
     AudioTranscriptionModule,
+    ChannelModule,
   ],
   controllers: [],
   providers: [],
