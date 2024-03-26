@@ -9,11 +9,11 @@ export const initAppModules = [
             port: databaseConfig.port || 3306,
             username: databaseConfig.username || 'admin',
             password: databaseConfig.password || 'admin',
-            database: databaseConfig.database ||'youtube',
+            database: databaseConfig.database || 'youtube',
             entities: [__dirname + '/../**/*.entity.{js,ts}'],
             synchronize: false,
             logging: false,
             autoLoadEntities: false,
         }),
-      }),
+    }),
 ]
