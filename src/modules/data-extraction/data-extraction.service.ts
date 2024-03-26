@@ -7,6 +7,7 @@ import { youtube_v3 } from 'googleapis';
 import { ChannelEntity } from "src/db/entities/channel.entity";
 import { VideoEntity } from "src/db/entities/video.entity";
 import { CommentEntity } from "src/db/entities/comment.entity";
+import { AudioTranscriptionService } from "../audio-transcription/audio-transcription.service";
 /*
     Example of usage
 
@@ -22,6 +23,7 @@ export class DataExtractionService {
         private readonly commentRepository: CommentRepository,
         private readonly channelRepository: ChannelRepository,
         private readonly videoRepository:   VideoRepository,
+        private readonly audioTranscriptionService: AudioTranscriptionService
     ) {
         this.youtubeApi = new youtube_v3.Youtube({
             auth: youtubeConfig.youtubeApiKey
@@ -61,7 +63,7 @@ export class DataExtractionService {
     }
 
     private async saveYoutubeDataForVideos(videos: youtube_v3.Schema$Video[]) {
-        const entities = videos.map((video)=>{
+        const entities = videos.map(async (video)=>{
             const videoEntity = new VideoEntity();
             videoEntity.id = video.id;
             videoEntity.channelId = video.snippet.channelId;
@@ -73,14 +75,13 @@ export class DataExtractionService {
             videoEntity.favoriteCount = +video.statistics.favoriteCount;
             videoEntity.publishedAt = new Date(video.snippet.publishedAt);
             videoEntity.recordingDate = new Date(video?.recordingDetails?.recordingDate || 0);
-            videoEntity.speechText = "";
+            videoEntity.speechText = '';
             videoEntity.title = video.snippet.title;
             videoEntity.viewCount = video.statistics.viewCount;
             return videoEntity;
         });
-        console.log(videos)
-        console.log(entities)
-        return this.videoRepository.save(entities);
+
+        return this.videoRepository.save(await Promise.all(entities));
 
     }
     
@@ -105,8 +106,12 @@ export class DataExtractionService {
         do {
             const [videosData, newPageToken] = await this.getVideosByPage(channelId, startDate, endDate, pageToken);
             pageToken = newPageToken;
-            videos.push(videosData.then((videoData)=>{
-                this.saveYoutubeDataForVideos(videoData)
+            videos.push(videosData.then(async (videoData)=>{
+                await this.saveYoutubeDataForVideos(videoData);
+                videoData.forEach((video)=>{
+                    this.transcribeVideo(video.id, video.snippet.defaultAudioLanguage)
+                });
+                
                 return videoData;
             }));
             
@@ -139,6 +144,19 @@ export class DataExtractionService {
 
     }
 
+    private async transcribeVideo(videoId: string, language: string) {
+        try {
+            const text = await this.audioTranscriptionService.transcribeAudioByUrl(`https://www.youtube.com/watch?v=${videoId}`, language);
+            const video = new VideoEntity();
+            video.id = videoId;
+            video.speechText = text;
+            this.videoRepository.save(video);
+        } catch(e) {
+            console.log(e);
+        }
+
+    }
+
 
     private async getVideosByPage(channelId: string, startDate: Date, endDate: Date, pageToken?: string): Promise<[
         Promise<youtube_v3.Schema$Video[]>, 
@@ -153,7 +171,7 @@ export class DataExtractionService {
         });
 
         const videoIds = data.items.map(({id})=>`${id.videoId}`);
-
+        if(videoIds.length == 0) return [Promise.resolve([]),null]
         const videosData = this.youtubeApi.videos.list({
             id: videoIds,
             maxResults: 50,

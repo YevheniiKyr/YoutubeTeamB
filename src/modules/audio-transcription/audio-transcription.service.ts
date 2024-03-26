@@ -12,6 +12,7 @@ export class AudioTranscriptionService {
     }
 
     async transcribeAudioByUrl(url: string, language: string) {
+        console.log(url);
         const { result, error } = await this.deepgram.listen.prerecorded.transcribeUrl(
             { url },
             {
