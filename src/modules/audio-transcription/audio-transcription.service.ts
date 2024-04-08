@@ -10,15 +10,13 @@ export class AudioTranscriptionService {
 
     constructor() {
         this.deepgram = Deepgram.createClient(deepgramConfig.apiKey);
-
-
     }
 
     private downloadVideo(url: string) {
         return new Promise((resolve, reject) => {
             try {
                 const audioReadableStream = ytdl(url, { filter: 'audioonly' });
-                
+
                 const audioBuffer = [];
 
                 audioReadableStream.on('data', (chunk) => {
