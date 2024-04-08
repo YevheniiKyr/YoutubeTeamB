@@ -17,4 +17,4 @@ import { ChannelModule } from './modules/channel/channel.module';
   controllers: [],
   providers: [],
 })
-export class AppModule { }
+export class AppModule {}
