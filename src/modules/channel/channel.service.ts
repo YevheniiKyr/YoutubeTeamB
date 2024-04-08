@@ -85,6 +85,7 @@ export class ChannelService {
   }
 
   public async getAllVideos(
+    { p = 1, limit }: PaginationParams,
     channelId: string,
     startDate?: string,
     endDate?: string,
@@ -101,10 +102,15 @@ export class ChannelService {
       query.andWhere('video.recordingDate < :endDate', { endDate });
     }
 
-    return query.getMany();
+    return limit
+      ? query
+          .limit(limit)
+          .offset((p - 1) * limit)
+          .getMany()
+      : query.getMany();
   }
 
-  public async getAllViews(
+  public async getTotalViews(
     countryCode: string,
     startDate?: string,
     endDate?: string,
@@ -130,6 +136,7 @@ export class ChannelService {
   }
 
   public async getAllComments(
+    { p = 1, limit }: PaginationParams,
     videoId: string,
     startDate?: string,
     endDate?: string,
@@ -146,6 +153,11 @@ export class ChannelService {
       query.andWhere('comment.publishedAt < :endDate', { endDate });
     }
 
-    return query.getMany();
+    return limit
+      ? query
+          .limit(limit)
+          .offset((p - 1) * limit)
+          .getMany()
+      : query.getMany();
   }
 }
