@@ -3,6 +3,7 @@ import { ValidationPipeOptions } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { AppModule } from './app.module';
 import { HttpExceptionFilter } from './common/exception-filters/http-exception.filter';
+import { AlertStatusEnum, AlertingService } from './modules/alerting/alerting.service';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -19,6 +20,8 @@ async function bootstrap() {
   app.useGlobalFilters(new HttpExceptionFilter());
 
   await app.listen(port);
+
+  app.get(AlertingService).alert('Hello', AlertStatusEnum.info)
 }
 
 void bootstrap();
