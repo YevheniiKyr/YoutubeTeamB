@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import * as Deepgram from '@deepgram/sdk';
 import { DeepgramClient } from '@deepgram/sdk';
-import * as ytdl from 'ytdl-core';
+import ytdl from 'ytdl-core';
 import { ConfigService } from '@nestjs/config';
 
 @Injectable()
