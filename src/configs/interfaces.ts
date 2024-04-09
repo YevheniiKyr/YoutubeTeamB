@@ -25,12 +25,18 @@ interface YoutubeConfig {
   channelsList: YoutubeChannel[];
 }
 
+interface TelegramConfig {
+  apiToken: string,
+  alertingChat: number
+}
+
 interface AppConfig {
   validationPipe: ValidationPipeOptions;
   cron: CronConfig;
   database: DatabaseConfig;
   deepgram: DeepgramConfig;
   youtube: YoutubeConfig;
+  telegram: TelegramConfig;
 }
 
 export { AppConfig, CronConfig, DatabaseConfig, DeepgramConfig, YoutubeConfig };

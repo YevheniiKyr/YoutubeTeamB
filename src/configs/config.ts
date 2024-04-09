@@ -47,4 +47,9 @@ export const appConfig = (): AppConfig => ({
       },
     ],
   },
+  telegram: {
+    apiToken: process.env.TELEGRAM_API,
+    alertingChat: 421142242
+
+  }
 });
