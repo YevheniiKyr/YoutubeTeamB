@@ -10,7 +10,7 @@ import { VideoEntity } from './video.entity';
 
 @Index('parentId', ['parentId'], {})
 @Index('videoId', ['videoId'], {})
-@Entity('Comment', { schema: 'youtube' })
+@Entity('Comment')
 export class CommentEntity {
   @Column('varchar', { primary: true, name: 'id', length: 255 })
   id: string;

@@ -7,6 +7,7 @@ import { AudioTranscriptionModule } from './modules/audio-transcription/audio-tr
 import { CronModule } from './modules/cron/cron.module';
 import { ChannelModule } from './modules/channel/channel.module';
 import { appConfig } from './configs/config';
+import { AlertingModule } from './modules/alerting/alerting.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { appConfig } from './configs/config';
     DataExtractionModule,
     AudioTranscriptionModule,
     ChannelModule,
+    AlertingModule,
   ],
   controllers: [],
   providers: [],
