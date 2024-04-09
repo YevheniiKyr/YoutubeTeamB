@@ -6,7 +6,7 @@ import { DataExtractionService } from '../data-extraction/data-extraction.servic
 export class CronService {
   public constructor(private dataExtractionService: DataExtractionService) {}
 
-  @Cron(process.env.CRON_SCHEDULE)
+  @Cron("0 0 0 * * *")
   handleCron() {
     const currentDate = Date.now();
     const lastUpdate = Date.now() - 24 * 60 * 60 * 1000;

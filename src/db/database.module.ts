@@ -10,7 +10,7 @@ import { VideoRepository } from './repositories/video.repository';
   imports: [
     TypeOrmModule.forRootAsync({
       useFactory: async (configService: ConfigService) => ({
-        type: 'mysql',
+        type: 'mssql',
         host: configService.get<string>('database.host') || '127.0.0.1',
         port: configService.get<number>('database.port') || 3306,
         username: configService.get<string>('database.username') || 'admin',
