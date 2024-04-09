@@ -11,7 +11,7 @@ import { CommentEntity } from './comment.entity';
 
 
 @Index('channelId', ['channelId'], {})
-@Entity('Video', { schema: 'youtube' })
+@Entity('Video')
 export class VideoEntity {
   @Column('varchar', { primary: true, name: 'id', length: 255 })
   id: string;
