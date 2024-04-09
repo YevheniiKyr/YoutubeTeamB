@@ -33,10 +33,12 @@
     "class-validator": "^0.14.1",
     "dotenv": "^16.4.5",
     "googleapis": "^134.0.0",
+    "mssql": "^10.0.2",
     "mysql": "^2.18.1",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1",
-    "typeorm": "^0.3.20"
+    "typeorm": "^0.3.20",
+    "ytdl-core": "^4.11.5"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",

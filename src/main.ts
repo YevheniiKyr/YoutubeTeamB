@@ -1,29 +1,24 @@
 import { NestFactory } from '@nestjs/core';
-import { HttpStatus, ValidationPipe } from '@nestjs/common';
-
+import { ValidationPipeOptions } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { AppModule } from './app.module';
 import { HttpExceptionFilter } from './common/exception-filters/http-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  app.useGlobalPipes(
-    new ValidationPipe({
-      errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,
-      transform: true,
-      validateCustomDecorators: true,
-      stopAtFirstError: true,
-      always: true,
-      whitelist: true,
-      transformOptions: {
-        exposeUnsetFields: false,
-        exposeDefaultValues: true,
-      },
-    }),
+  const configService = app.get<ConfigService>(ConfigService);
+
+  const port = configService.get<number>('APP_PORT');
+  const validationPipeConfig = configService.get<ValidationPipeOptions>(
+    'validationPipe',
+    { infer: true },
   );
+
+  app.useGlobalPipes(validationPipeConfig);
   app.useGlobalFilters(new HttpExceptionFilter());
 
-  await app.listen(3000);
+  await app.listen(port);
 }
 
-bootstrap();
+void bootstrap();
