@@ -49,28 +49,40 @@ export default class ChannelController {
 
   @Get('/videos')
   async getAllVideos(
+    @Query() paginationParams: PaginationParams,
     @Query('channelId') channelId: string,
     @Query('startDate') startDate?: string,
     @Query('endDate') endDate?: string,
   ): Promise<VideoEntity[]> {
-    return this.channelService.getAllVideos(channelId, startDate, endDate);
+    return this.channelService.getAllVideos(
+      paginationParams,
+      channelId,
+      startDate,
+      endDate,
+    );
   }
 
   @Get('/views')
-  async getAllViews(
+  async getTotalViews(
     @Query('country') countryCode: string,
     @Query('startDate') startDate?: string,
     @Query('endDate') endDate?: string,
   ): Promise<{ views: number }> {
-    return this.channelService.getAllViews(countryCode, startDate, endDate);
+    return this.channelService.getTotalViews(countryCode, startDate, endDate);
   }
 
   @Get('/comments')
   async getAllComments(
+    @Query() paginationParams: PaginationParams,
     @Query('videoId') videoId: string,
     @Query('startDate') startDate?: string,
     @Query('endDate') endDate?: string,
   ): Promise<CommentEntity[]> {
-    return this.channelService.getAllComments(videoId, startDate, endDate);
+    return this.channelService.getAllComments(
+      paginationParams,
+      videoId,
+      startDate,
+      endDate,
+    );
   }
 }
