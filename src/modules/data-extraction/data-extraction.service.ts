@@ -147,12 +147,16 @@ export class DataExtractionService {
   private async saveCommentsByVideos(videoId: string) {
     let pageToken;
     do {
-      const [videosData, newPageToken] = await this.getCommentsByPage(
-        videoId,
-        pageToken,
-      );
-      pageToken = newPageToken;
-      this.saveYoutubeDataForComments(videosData);
+      try{
+        const [videosData, newPageToken] = await this.getCommentsByPage(
+          videoId,
+          pageToken,
+        );
+        pageToken = newPageToken;
+        this.saveYoutubeDataForComments(videosData);
+      } catch(e) {
+        pageToken = null;
+      }
     } while (pageToken);
   }
 

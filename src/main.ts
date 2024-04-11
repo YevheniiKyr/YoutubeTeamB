@@ -5,6 +5,9 @@ import { AppModule } from './app.module';
 import { HttpExceptionFilter } from './common/exception-filters/http-exception.filter';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ChannelRepository } from './db/repositories/channel.repository';
+import { DataExtractionService } from './modules/data-extraction/data-extraction.service';
+import { VideoRepository } from './db/repositories/video.repository';
+import ChannelController from './modules/channel/channel.controller';
 
 
 async function bootstrap() {
@@ -27,7 +30,6 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, new DocumentBuilder().build());
   SwaggerModule.setup('api', app, document);
 
-  app.get(ChannelRepository).find().then(console.log)
   
   app.enableCors();
   await app.listen(port);
