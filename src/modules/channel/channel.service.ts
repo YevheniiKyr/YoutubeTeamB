@@ -95,11 +95,11 @@ export class ChannelService {
       .where('video.channelId = :channelId', { channelId });
 
     if (startDate) {
-      query.andWhere('video.recordingDate > :startDate', { startDate });
+      query.andWhere('video.publishedAt > :startDate', { startDate:  new Date(startDate) });
     }
 
     if (endDate) {
-      query.andWhere('video.recordingDate < :endDate', { endDate });
+      query.andWhere('video.publishedAt < :endDate', { endDate:  new Date(endDate) });
     }
 
     return limit
@@ -121,11 +121,11 @@ export class ChannelService {
       .where('channel.country = :country', { country: countryCode });
 
     if (startDate) {
-      qb.andWhere('video.recordingDate > :startDate', { startDate });
+      qb.andWhere('video.publishedAt > :startDate', { startDate:  new Date(startDate) });
     }
 
     if (endDate) {
-      qb.andWhere('video.recordingDate < :endDate', { endDate });
+      qb.andWhere('video.publishedAt < :endDate', { endDate:  new Date(endDate)});
     }
 
     const totalViews = await qb
@@ -146,11 +146,11 @@ export class ChannelService {
       .where('comment.videoId = :videoId', { videoId });
 
     if (startDate) {
-      query.andWhere('comment.publishedAt > :startDate', { startDate });
+      query.andWhere('comment.publishedAt > :startDate', { startDate:  new Date(startDate) });
     }
 
     if (endDate) {
-      query.andWhere('comment.publishedAt < :endDate', { endDate });
+      query.andWhere('comment.publishedAt < :endDate', { endDate:  new Date(endDate)});
     }
 
     return limit

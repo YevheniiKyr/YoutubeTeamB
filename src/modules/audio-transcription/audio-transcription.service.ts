@@ -41,6 +41,8 @@ export class AudioTranscriptionService {
     }
 
     async transcribeAudioByUrl(url: string, language: string) {
+
+
         const audioFile = await this.downloadVideo(url) as Buffer;
 
         const { result, error } = await this.deepgram.listen.prerecorded.transcribeFile(
@@ -54,6 +56,7 @@ export class AudioTranscriptionService {
         if (error) {
             throw error;
         }
+        console.log(result?.results?.channels[0].alternatives[0]?.transcript)
 
         return result?.results?.channels[0].alternatives[0]?.transcript;
     }
