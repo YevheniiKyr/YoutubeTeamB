@@ -36,14 +36,47 @@ export const appConfig = (): AppConfig => ({
       {
         name: '@uttoronto',
         id: 'UCF_ZiWz2Vcq1o5u5i1TT3Kw',
+        defaultLanguage: "UA",
       },
       {
         name: '@whiteguard_ua',
         id: 'UCV6AsXIRnrsBVEjAcFDO6SA',
+        defaultLanguage: "UA",
       },
       {
         name: '@intimeUkraine',
         id: 'UCL7Vqph7xNpidbgjmfxpNyg',
+        defaultLanguage: "UA",
+      },
+      {
+        name: '@dailymail',
+        id: 'UCw3fku0sH3qA3c3pZeJwdAw',
+        defaultLanguage: "GB",
+      },
+      {
+        name: '@ABCNews',
+        id: 'UCBi2mrWuNuyYy4gbM6fU18Q',
+        defaultLanguage: "GB",
+      },
+      {
+        name: '@thesun',
+        id: 'UCIzXayRP7-P0ANpq-nD-h5g',
+        defaultLanguage: "GB",
+      },
+      {
+        name: '@Max_Katz',
+        id: 'UCUGfDbfRIx51kJGGHIFo8Rw',
+        defaultLanguage: "RU",
+      },
+      {
+        name: '@Agit_Prop',
+        id: 'UC2qoLqo8RuV4P_88yhHCZIg',
+        defaultLanguage: "RU",
+      },
+      {
+        name: '@RTVINews',
+        id: 'UCPU28A9z_ka_R5dQfecHJlA',
+        defaultLanguage: "RU",
       },
     ],
   },
