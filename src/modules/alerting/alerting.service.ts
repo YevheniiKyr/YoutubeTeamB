@@ -28,10 +28,12 @@ export class AlertingService {
         switch(status) {
             case AlertStatusEnum.error:
                 result = '❗'
+                break;
             case AlertStatusEnum.warning:
                 result = '⚠️';
+                break;
             case AlertStatusEnum.info:
-                result = '✅';
+                result = '✅';     
         } 
         return result;
     }
