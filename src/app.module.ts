@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-
+import { ServeStaticModule } from '@nestjs/serve-static';
 import { DataExtractionModule } from './modules/data-extraction/data-extraction.module';
 import { DatabaseModule } from './db/database.module';
 import { AudioTranscriptionModule } from './modules/audio-transcription/audio-transcription.module';
@@ -8,6 +8,7 @@ import { CronModule } from './modules/cron/cron.module';
 import { ChannelModule } from './modules/channel/channel.module';
 import { appConfig } from './configs/config';
 import { AlertingModule } from './modules/alerting/alerting.module';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -16,6 +17,10 @@ import { AlertingModule } from './modules/alerting/alerting.module';
       isGlobal: true,
       cache: true,
     }),
+    // ServeStaticModule.forRoot({
+    //   rootPath: join(__dirname, '..', 'wwwroot'),
+    //   serveRoot: '/api/wwwroot',
+    // }),
     CronModule,
     DatabaseModule,
     DataExtractionModule,
