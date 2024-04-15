@@ -1,0 +1,290 @@
+{
+	"info": {
+		"_postman_id": "ab4b172b-389e-470b-b3a2-656f5b579a86",
+		"name": "SD YT Team Echo API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "9122261"
+	},
+	"item": [
+		{
+			"name": "Get all channels",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{apiUrl}}/channels",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"channels"
+					],
+					"query": [
+						{
+							"key": "p",
+							"value": "1",
+							"description": "pagination parameter (page) - optional",
+							"disabled": true
+						},
+						{
+							"key": "limit",
+							"value": "100",
+							"description": "pagination parameter (records per page) - optional",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Average comment count",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{apiUrl}}/channels/avg-comment-count?channelId=2552",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"channels",
+						"avg-comment-count"
+					],
+					"query": [
+						{
+							"key": "channelId",
+							"value": "2552",
+							"description": "channel ID - required"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Average likes/dislikes ratio",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{apiUrl}}/channels/avg-likes-dislikes-ratio?channelId=2552",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"channels",
+						"avg-likes-dislikes-ratio"
+					],
+					"query": [
+						{
+							"key": "channelId",
+							"value": "2552",
+							"description": "channel ID - required"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Video count by country",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{apiUrl}}/channels/video-count?country=UA",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"channels",
+						"video-count"
+					],
+					"query": [
+						{
+							"key": "country",
+							"value": "UA",
+							"description": "Country code (ISO 3166-1 alpha-2) - required"
+						},
+						{
+							"key": "startDate",
+							"value": "2022-02-24",
+							"description": "Starting date of video publising (YYYY-MM-DD) - optional",
+							"disabled": true
+						},
+						{
+							"key": "endDate",
+							"value": "2022-03-24",
+							"description": "Ending date of video publising (YYYY-MM-DD) - optional",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Total views by country",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{apiUrl}}/channels/views?country=UA",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"channels",
+						"views"
+					],
+					"query": [
+						{
+							"key": "country",
+							"value": "UA",
+							"description": "Country code (ISO 3166-1 alpha-2) - required"
+						},
+						{
+							"key": "startDate",
+							"value": "2022-02-24",
+							"description": "Starting date of video publising (YYYY-MM-DD) - optional",
+							"disabled": true
+						},
+						{
+							"key": "endDate",
+							"value": "2022-03-24",
+							"description": "Ending date of video publising (YYYY-MM-DD) - optional",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all videos from channel",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{apiUrl}}/channels/videos?channelId=2552",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"channels",
+						"videos"
+					],
+					"query": [
+						{
+							"key": "p",
+							"value": "1",
+							"description": "pagination parameter (page) - optional",
+							"disabled": true
+						},
+						{
+							"key": "limit",
+							"value": "100",
+							"description": "pagination parameter (records per page) - optional",
+							"disabled": true
+						},
+						{
+							"key": "channelId",
+							"value": "2552",
+							"description": "channel ID - required"
+						},
+						{
+							"key": "startDate",
+							"value": "2022-02-24",
+							"description": "Starting date of video publising (YYYY-MM-DD) - optional",
+							"disabled": true
+						},
+						{
+							"key": "endDate",
+							"value": "2022-03-24",
+							"description": "Ending date of video publising (YYYY-MM-DD) - optional",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all comments from video",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{apiUrl}}/channels/videos?videoId=sddss2121ds",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"channels",
+						"videos"
+					],
+					"query": [
+						{
+							"key": "p",
+							"value": "1",
+							"description": "pagination parameter (page) - optional",
+							"disabled": true
+						},
+						{
+							"key": "limit",
+							"value": "100",
+							"description": "pagination parameter (records per page) - optional",
+							"disabled": true
+						},
+						{
+							"key": "videoId",
+							"value": "sddss2121ds",
+							"description": "video ID - required"
+						},
+						{
+							"key": "startDate",
+							"value": "2022-02-24",
+							"description": "Starting date of video publising (YYYY-MM-DD) - optional",
+							"disabled": true
+						},
+						{
+							"key": "endDate",
+							"value": "2022-03-24",
+							"description": "Ending date of video publising (YYYY-MM-DD) - optional",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "apiUrl",
+			"value": "https://youtube-team-b.vercel.app/api",
+			"type": "string"
+		}
+	]
+}
