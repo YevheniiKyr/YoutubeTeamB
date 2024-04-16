@@ -9,6 +9,7 @@ import { DataExtractionService } from './modules/data-extraction/data-extraction
 import { VideoRepository } from './db/repositories/video.repository';
 import ChannelController from './modules/channel/channel.controller';
 import { AlertStatusEnum, AlertingService } from './modules/alerting/alerting.service';
+import { ChannelService } from './modules/channel/channel.service';
 
 
 async function bootstrap() {
@@ -31,12 +32,10 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, new DocumentBuilder().build());
   SwaggerModule.setup('api', app, document);
 
-  //let lastUpdate = 1712591579815;
-
+ 
   app.get(AlertingService).alert('Service started', AlertStatusEnum.info)
   app.enableCors();
   await app.listen(port);
-
 }
 
 void bootstrap();

@@ -129,7 +129,7 @@ export class ChannelService {
     }
 
     const totalViews = await qb
-      .select('SUM(video.views)', 'totalViews')
+      .select('SUM(video.viewCount)', 'totalViews')
       .getRawOne();
 
     return { views: totalViews };
