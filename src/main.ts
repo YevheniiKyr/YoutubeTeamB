@@ -48,8 +48,6 @@ async function bootstrap() {
 
   SwaggerModule.setup('api', app, document, customOptions);
 
-  //let lastUpdate = 1712591579815;
-
   app.get(AlertingService).alert('Service started', AlertStatusEnum.info);
   app.enableCors();
   await app.listen(port);
