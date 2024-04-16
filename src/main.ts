@@ -8,16 +8,10 @@ import { ChannelRepository } from './db/repositories/channel.repository';
 import { DataExtractionService } from './modules/data-extraction/data-extraction.service';
 import { VideoRepository } from './db/repositories/video.repository';
 import ChannelController from './modules/channel/channel.controller';
-<<<<<<< HEAD
-import { AlertStatusEnum, AlertingService } from './modules/alerting/alerting.service';
-import { ChannelService } from './modules/channel/channel.service';
-
-=======
 import {
   AlertStatusEnum,
   AlertingService,
 } from './modules/alerting/alerting.service';
->>>>>>> 9922a33e9cd77c0607130d8954f39f95329cdacc
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
