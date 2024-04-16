@@ -57,7 +57,7 @@ Install npm packages:
 ```
 npm run i
 ```
-6. Run server with:
+7. Run server with:
 ```
 npm run start:dev
 ```
