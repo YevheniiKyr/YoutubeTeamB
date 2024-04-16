@@ -1,10 +1,9 @@
 {
 	"info": {
-		"_postman_id": "e3fc238f-2d76-4ce9-aa9a-17b9e700191a",
+		"_postman_id": "7f12ce1b-5d8a-47b1-bbb0-e2c1843747e0",
 		"name": "SD YT Team Echo API",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "13092538",
-		"_collection_link": "https://galactic-star-226922.postman.co/workspace/ARB~da640aee-ff7c-40e9-a501-30f8a19da813/collection/13092538-e3fc238f-2d76-4ce9-aa9a-17b9e700191a?action=share&source=collection_link&creator=13092538"
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "9122261"
 	},
 	"item": [
 		{
@@ -192,13 +191,13 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{apiUrl}}/channels/videos?videoId=sddss2121ds",
+					"raw": "{{apiUrl}}/channels/comments?videoId=sddss2121ds",
 					"host": [
 						"{{apiUrl}}"
 					],
 					"path": [
 						"channels",
-						"videos"
+						"comments"
 					],
 					"query": [
 						{
