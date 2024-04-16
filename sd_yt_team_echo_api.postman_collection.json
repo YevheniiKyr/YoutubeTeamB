@@ -1,9 +1,10 @@
 {
 	"info": {
-		"_postman_id": "ab4b172b-389e-470b-b3a2-656f5b579a86",
+		"_postman_id": "e3fc238f-2d76-4ce9-aa9a-17b9e700191a",
 		"name": "SD YT Team Echo API",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
-		"_exporter_id": "9122261"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13092538",
+		"_collection_link": "https://galactic-star-226922.postman.co/workspace/ARB~da640aee-ff7c-40e9-a501-30f8a19da813/collection/13092538-e3fc238f-2d76-4ce9-aa9a-17b9e700191a?action=share&source=collection_link&creator=13092538"
 	},
 	"item": [
 		{
@@ -50,31 +51,6 @@
 					"path": [
 						"channels",
 						"avg-comment-count"
-					],
-					"query": [
-						{
-							"key": "channelId",
-							"value": "2552",
-							"description": "channel ID - required"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Average likes/dislikes ratio",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{apiUrl}}/channels/avg-likes-dislikes-ratio?channelId=2552",
-					"host": [
-						"{{apiUrl}}"
-					],
-					"path": [
-						"channels",
-						"avg-likes-dislikes-ratio"
 					],
 					"query": [
 						{
