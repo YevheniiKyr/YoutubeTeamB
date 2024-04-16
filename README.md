@@ -39,7 +39,7 @@ YOUTUBE_API_KEY=
 TELEGRAM_API=
 ```
 
-3. Set up corn
+3. Set up Cron
 
 If you are using serverless cloud functions 
   Keep @Cron commented in src/modules/cron and use api/cron endpoint.
