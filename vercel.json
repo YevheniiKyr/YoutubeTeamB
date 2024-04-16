@@ -18,5 +18,11 @@
         "DELETE"
       ]
     }
+  ],
+  "crons": [
+    {
+      "path": "/api/cron",
+      "schedule": "*/60 * * * *"
+    }
   ]
 }
