@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-// import { Cron } from '@nestjs/schedule';
+import { Cron } from '@nestjs/schedule';
 import { DataExtractionService } from '../data-extraction/data-extraction.service';
 import { AlertStatusEnum, AlertingService } from '../alerting/alerting.service';
 
