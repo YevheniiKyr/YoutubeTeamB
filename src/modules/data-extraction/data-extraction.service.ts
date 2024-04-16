@@ -77,6 +77,7 @@ export class DataExtractionService {
     channelEntity.defaultLanguage = channel.snippet.country || this.configService.get<YoutubeChannel[]>('youtube.channelsList').find(({id})=>id==channel.id).defaultLanguage;
     channelEntity.descriptionChannel = channel.snippet.description;
     channelEntity.customUrl = channel.snippet.customUrl;
+    channelEntity.country = channel.snippet.country || this.configService.get<YoutubeChannel[]>('youtube.channelsList').find(({id})=>id==channel.id).defaultLanguage;
     channelEntity.subscriberCount = +channel.statistics.subscriberCount;
     channelEntity.id = channel.id;
     this.channelRepository.save(channelEntity);
@@ -200,7 +201,9 @@ export class DataExtractionService {
     try {
       const text = await this.audioTranscriptionService.transcribeAudioByUrl(
         `https://www.youtube.com/watch?v=${videoId}`,
-        language == 'US'? 'en-US': language,
+        language == 'US'? 'en-US': 
+        language == 'GB'? 'en-GB':
+        language,
       );
       const video = new VideoEntity();
       video.id = videoId;

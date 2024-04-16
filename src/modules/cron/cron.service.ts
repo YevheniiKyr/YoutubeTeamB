@@ -7,7 +7,8 @@ import { AlertStatusEnum, AlertingService } from '../alerting/alerting.service';
 export class CronService {
   public constructor(private dataExtractionService: DataExtractionService, private alertingService: AlertingService) {}
 
-  // @Cron("0 0 0 * * *")
+
+   @Cron("0 0 0 * * *")
   handleCron() {
     const currentDate = Date.now();
     const lastUpdate = Date.now() - 24 * 60 * 60 * 1000; 
