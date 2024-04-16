@@ -8,7 +8,7 @@
 
 ## Introduction
 
-This project involves extracting data from YouTube, parsing the extracted data, and storing it for further analysis by the analytics team. Our team (Team Echi) is responsible for building and maintaining the data extraction and storage process.
+This project involves extracting data from YouTube, parsing the extracted data, and storing it for further analysis by the analytics team. Our team (Team "Echo") is responsible for building and maintaining the data extraction and storage process.
 
 ## Team
 
@@ -40,19 +40,19 @@ TELEGRAM_API=
 ```
 
 3. Set up Cron
-
+```
 If you are using serverless cloud functions 
   Keep @Cron commented in src/modules/cron and use api/cron endpoint.
 Else
   Uncomment @Cron
-
+```
 4. Set up in code configs in src/configs/config.ts
 ```
 youtube: {
   channelList : [/*Your channels*/]
 }
 ``` 
-6. Make sure [Node.js](https://nodejs.org/en)and npm are installed on your machine.
+6. Make sure [Node.js](https://nodejs.org/en) and npm are installed on your machine.
 Install npm packages:
 ```
 npm run i
