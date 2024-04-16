@@ -24,18 +24,28 @@ cd YoutubeTeamB
 ```
 2. Set up `.env` file:
 ```
+# App
+APP_PORT=
+
+# Cron
+CRON_SCHEDULE=
+
+# Database
 DB_HOST= 
 DB_PORT=
 DB_USER=
 DB_PASSWORD=
 DB_DATABASE_NAME= 
 
+# Deepgram
 DEEPGRAM_API_KEY=
 
+# YouTube
 YOUTUBE_URL=
 YOUTUBE_API_URL=
 YOUTUBE_API_KEY= 
 
+# Telegram
 TELEGRAM_API=
 ```
 
