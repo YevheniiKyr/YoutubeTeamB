@@ -38,12 +38,26 @@ YOUTUBE_API_KEY=
 
 TELEGRAM_API=
 ```
-3. Make sure [Node.js](https://nodejs.org/en)and npm are installed on your machine.
+
+3. Set up corn
+
+If you are using serverless cloud functions 
+  Keep @Cron commented in src/modules/cron and use api/cron endpoint.
+Else
+  Uncomment @Cron
+
+4. Set up in code configs in src/configs/config.ts
+```
+youtube: {
+  channelList : [/*Your channels*/]
+}
+``` 
+6. Make sure [Node.js](https://nodejs.org/en)and npm are installed on your machine.
 Install npm packages:
 ```
 npm run i
 ```
-4. Run server with:
+6. Run server with:
 ```
 npm run start:dev
 ```
