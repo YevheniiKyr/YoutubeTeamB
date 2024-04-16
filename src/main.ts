@@ -8,9 +8,16 @@ import { ChannelRepository } from './db/repositories/channel.repository';
 import { DataExtractionService } from './modules/data-extraction/data-extraction.service';
 import { VideoRepository } from './db/repositories/video.repository';
 import ChannelController from './modules/channel/channel.controller';
+<<<<<<< HEAD
 import { AlertStatusEnum, AlertingService } from './modules/alerting/alerting.service';
 import { ChannelService } from './modules/channel/channel.service';
 
+=======
+import {
+  AlertStatusEnum,
+  AlertingService,
+} from './modules/alerting/alerting.service';
+>>>>>>> 9922a33e9cd77c0607130d8954f39f95329cdacc
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -29,11 +36,27 @@ async function bootstrap() {
   app.useGlobalFilters(new HttpExceptionFilter());
   app.setGlobalPrefix('api');
 
-  const document = SwaggerModule.createDocument(app, new DocumentBuilder().build());
-  SwaggerModule.setup('api', app, document);
+  const document = SwaggerModule.createDocument(
+    app,
+    new DocumentBuilder().build(),
+  );
+  const customOptions = {
+    customJs: [
+      'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui-bundle.min.js',
+      'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui-standalone-preset.min.js',
+    ],
+    customCssUrl: [
+      'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui.min.css',
+      'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui-standalone-preset.min.css',
+      'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui.css',
+    ],
+  };
 
- 
-  app.get(AlertingService).alert('Service started', AlertStatusEnum.info)
+  SwaggerModule.setup('api', app, document, customOptions);
+
+  //let lastUpdate = 1712591579815;
+
+  app.get(AlertingService).alert('Service started', AlertStatusEnum.info);
   app.enableCors();
   await app.listen(port);
 }
