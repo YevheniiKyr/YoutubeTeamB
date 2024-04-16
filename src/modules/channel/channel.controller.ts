@@ -11,6 +11,7 @@ import { PaginationParams } from './dtos/pagination-params.dto';
 import { CommentEntity } from '../../db/entities/comment.entity';
 import { ChannelEntity } from '../../db/entities/channel.entity';
 import { ChannelService } from './channel.service';
+import { DateFilterParams } from './dtos/date-filter-params.dto';
 
 @Controller('channels')
 @UseInterceptors(ClassSerializerInterceptor)
@@ -41,48 +42,52 @@ export default class ChannelController {
   @Get('/video-count')
   async getVideoCount(
     @Query('country') countryCode: string,
-    @Query('startDate') startDate?: string,
-    @Query('endDate') endDate?: string,
+    @Query() dateFilterParams?: DateFilterParams,
   ): Promise<{ count: number }> {
-    return this.channelService.getVideoCount(countryCode, startDate, endDate);
+    return this.channelService.getVideoCount(
+      countryCode,
+      dateFilterParams?.startDate,
+      dateFilterParams?.endDate,
+    );
   }
 
   @Get('/videos')
   async getAllVideos(
     @Query() paginationParams: PaginationParams,
     @Query('channelId') channelId: string,
-    @Query('startDate') startDate?: string,
-    @Query('endDate') endDate?: string,
+    @Query() dateFilterParams?: DateFilterParams,
   ): Promise<VideoEntity[]> {
     return this.channelService.getAllVideos(
       paginationParams,
       channelId,
-      startDate,
-      endDate,
+      dateFilterParams?.startDate,
+      dateFilterParams?.endDate,
     );
   }
 
   @Get('/views')
   async getTotalViews(
     @Query('country') countryCode: string,
-    @Query('startDate') startDate?: string,
-    @Query('endDate') endDate?: string,
+    @Query() dateFilterParams?: DateFilterParams,
   ): Promise<{ views: number }> {
-    return this.channelService.getTotalViews(countryCode, startDate, endDate);
+    return this.channelService.getTotalViews(
+      countryCode,
+      dateFilterParams?.startDate,
+      dateFilterParams?.endDate,
+    );
   }
 
   @Get('/comments')
   async getAllComments(
     @Query() paginationParams: PaginationParams,
     @Query('videoId') videoId: string,
-    @Query('startDate') startDate?: string,
-    @Query('endDate') endDate?: string,
+    @Query() dateFilterParams?: DateFilterParams,
   ): Promise<CommentEntity[]> {
     return this.channelService.getAllComments(
       paginationParams,
       videoId,
-      startDate,
-      endDate,
+      dateFilterParams?.startDate,
+      dateFilterParams?.endDate,
     );
   }
 }
