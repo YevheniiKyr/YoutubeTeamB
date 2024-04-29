@@ -7,13 +7,15 @@ import { appConfig } from 'src/configs/config';
 @Injectable()
 export class CronService {
   public constructor(private dataExtractionService: DataExtractionService, private alertingService: AlertingService) {}
-  
+
   //@Cron(appConfig().cron.cronSchedule)
-  handleCron() {
+
+   // @Cron("0 0 0 * * *")
+  async handleCron() {
     const currentDate = Date.now();
     const lastUpdate = Date.now() - 24 * 60 * 60 * 1000; 
     this.alertingService.alert(`initiating processing`, AlertStatusEnum.info);
-    this.dataExtractionService.saveYoutubeDataToDBByDateRange(
+    await this.dataExtractionService.saveYoutubeDataToDBByDateRange(
       new Date(lastUpdate),
       new Date(currentDate),
     );
