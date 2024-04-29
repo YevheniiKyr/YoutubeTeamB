@@ -4,6 +4,7 @@ import { CronService } from "./cron.service";
 import { DataExtractionModule } from "../data-extraction/data-extraction.module";
 import { AlertingModule } from "../alerting/alerting.module";
 import { ConfigModule, ConfigService } from "@nestjs/config";
+import CronController from "./cron.controller";
 
 
 @Module({
@@ -13,7 +14,7 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
         AlertingModule,
         ConfigModule
     ],
-    controllers: [],
+    controllers: [CronController],
     providers: [CronService],
     exports: [CronService]
 })

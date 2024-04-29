@@ -8,7 +8,7 @@ import { appConfig } from 'src/configs/config';
 export class CronService {
   public constructor(private dataExtractionService: DataExtractionService, private alertingService: AlertingService) {}
   
-  @Cron(appConfig().cron.cronSchedule)
+  //@Cron(appConfig().cron.cronSchedule)
   handleCron() {
     const currentDate = Date.now();
     const lastUpdate = Date.now() - 24 * 60 * 60 * 1000; 
