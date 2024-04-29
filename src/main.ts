@@ -16,7 +16,6 @@ import {
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  console.log(process.env);
 
   const configService = app.get<ConfigService>(ConfigService);
 
