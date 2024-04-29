@@ -3,6 +3,7 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { CronService } from "./cron.service";
 import { DataExtractionModule } from "../data-extraction/data-extraction.module";
 import { AlertingModule } from "../alerting/alerting.module";
+import CronController from "./cron.controller";
 
 
 @Module({
@@ -11,7 +12,7 @@ import { AlertingModule } from "../alerting/alerting.module";
         ScheduleModule.forRoot(),
         AlertingModule
     ],
-    controllers: [],
+    controllers: [CronController],
     providers: [CronService],
     exports: [CronService]
 })
