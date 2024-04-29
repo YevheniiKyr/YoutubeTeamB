@@ -46,6 +46,7 @@ async function bootstrap() {
   };
 
   SwaggerModule.setup('api', app, document, customOptions);
+  
 
   app.get(AlertingService).alert('Service started', AlertStatusEnum.info);
   app.enableCors();
