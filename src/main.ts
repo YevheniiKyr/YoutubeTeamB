@@ -16,7 +16,6 @@ import {
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  console.log(process.env);
 
   const configService = app.get<ConfigService>(ConfigService);
 
@@ -47,8 +46,6 @@ async function bootstrap() {
   };
 
   SwaggerModule.setup('api', app, document, customOptions);
-
-  //let lastUpdate = 1712591579815;
 
   app.get(AlertingService).alert('Service started', AlertStatusEnum.info);
   app.enableCors();

@@ -16,7 +16,7 @@ export const appConfig = (): AppConfig => ({
     },
   },
   cron: {
-    cronSchedule: process.env.CRON_SCHEDULE,
+    cronSchedule: "0 21 * * * *",
   },
   database: {
     host: process.env.DB_HOST,
@@ -78,6 +78,11 @@ export const appConfig = (): AppConfig => ({
         id: 'UCPU28A9z_ka_R5dQfecHJlA',
         defaultLanguage: "RU",
       },
+      {
+        name: '@RFU',
+        id: 'UCcNB1tZYpeDetqCadElv9Ow',
+        defaultLanguage: "GB",
+      }
     ],
   },
   telegram: {
