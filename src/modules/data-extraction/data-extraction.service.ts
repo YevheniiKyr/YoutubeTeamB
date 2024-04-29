@@ -41,6 +41,20 @@ export class DataExtractionService {
     );
   }
 
+  public async backFillYoutubeData(monthsAgo: number): Promise<void> {
+    const timestamp = 1712591579815;
+    let lastUpdate = timestamp - monthsAgo * 30 * 24 * 60 * 60 * 1000;
+
+    while (true) {
+      await this.saveYoutubeDataToDBByDateRange(
+        new Date(lastUpdate - 24 * 60 * 60 * 1000),
+        new Date(lastUpdate),
+      );
+      lastUpdate -= -24 * 60 * 60 * 1000;
+      console.log(lastUpdate);
+    }
+  }
+
   async saveYoutubeDataToDBByDateRange(startDate: Date, endDate: Date) {
     const { data } = await this.youtubeApi.channels.list({
       part: ['statistics', 'snippet'],
@@ -56,14 +70,16 @@ export class DataExtractionService {
         startDate,
         endDate,
       );
-      videoCount+=videos.length;
+      videoCount += videos.length;
       for (const video of videos) {
-        commentCount+=await this.saveCommentsByVideos(video.id);
+        commentCount += await this.saveCommentsByVideos(video.id);
       }
     }
 
-    this.alertingService.alert(`commentCount: ${commentCount} videoCount: ${videoCount}`, AlertStatusEnum.info);
-
+    this.alertingService.alert(
+      `commentCount: ${commentCount} videoCount: ${videoCount}`,
+      AlertStatusEnum.info,
+    );
   }
 
   private async saveYoutubeDataForOneChannel(
@@ -74,10 +90,18 @@ export class DataExtractionService {
     channelEntity.videoCount = +channel.statistics.videoCount;
     channelEntity.title = channel.snippet.title;
     channelEntity.publishedAt = new Date(channel.snippet.publishedAt);
-    channelEntity.defaultLanguage = channel.snippet.country || this.configService.get<YoutubeChannel[]>('youtube.channelsList').find(({id})=>id==channel.id).defaultLanguage;
+    channelEntity.defaultLanguage =
+      channel.snippet.country ||
+      this.configService
+        .get<YoutubeChannel[]>('youtube.channelsList')
+        .find(({ id }) => id == channel.id).defaultLanguage;
     channelEntity.descriptionChannel = channel.snippet.description;
     channelEntity.customUrl = channel.snippet.customUrl;
-    channelEntity.country = channel.snippet.country || this.configService.get<YoutubeChannel[]>('youtube.channelsList').find(({id})=>id==channel.id).defaultLanguage;
+    channelEntity.country =
+      channel.snippet.country ||
+      this.configService
+        .get<YoutubeChannel[]>('youtube.channelsList')
+        .find(({ id }) => id == channel.id).defaultLanguage;
     channelEntity.subscriberCount = +channel.statistics.subscriberCount;
     channelEntity.id = channel.id;
     this.channelRepository.save(channelEntity);
@@ -110,7 +134,6 @@ export class DataExtractionService {
   private async saveYoutubeDataForComments(
     comments: youtube_v3.Schema$Comment[],
   ) {
-
     const entities = comments.map((comment) => {
       const commentEntity = new CommentEntity();
       commentEntity.likeCount = comment.snippet.likeCount;
@@ -133,7 +156,7 @@ export class DataExtractionService {
   ) {
     const videos: Promise<youtube_v3.Schema$Video[]>[] = [];
     let pageToken;
-    let videoCount = 0;
+    const videoCount = 0;
     do {
       const [videosData, newPageToken] = await this.getVideosByPage(
         channelId,
@@ -146,7 +169,15 @@ export class DataExtractionService {
         videosData.then(async (videoData) => {
           await this.saveYoutubeDataForVideos(videoData);
           videoData.forEach((video) => {
-            this.transcribeVideo(video.id, video.snippet.defaultAudioLanguage || video.snippet.defaultLanguage || channelLanguage || this.configService.get<YoutubeChannel[]>('youtube.channelsList').find(({id})=>id == channelId).defaultLanguage);
+            this.transcribeVideo(
+              video.id,
+              video.snippet.defaultAudioLanguage ||
+                video.snippet.defaultLanguage ||
+                channelLanguage ||
+                this.configService
+                  .get<YoutubeChannel[]>('youtube.channelsList')
+                  .find(({ id }) => id == channelId).defaultLanguage,
+            );
           });
 
           return videoData;
@@ -161,7 +192,7 @@ export class DataExtractionService {
     let pageToken;
     let commentCount = 0;
     do {
-      try{
+      try {
         const [videosData, newPageToken] = await this.getCommentsByPage(
           videoId,
           pageToken,
@@ -169,7 +200,7 @@ export class DataExtractionService {
         pageToken = newPageToken;
         this.saveYoutubeDataForComments(videosData);
         commentCount += videosData.length;
-      } catch(e) {
+      } catch (e) {
         pageToken = null;
       }
     } while (pageToken);
@@ -201,18 +232,18 @@ export class DataExtractionService {
     try {
       const text = await this.audioTranscriptionService.transcribeAudioByUrl(
         `https://www.youtube.com/watch?v=${videoId}`,
-        language == 'US'? 'en-US': 
-        language == 'GB'? 'en-GB':
-        language,
+        language == 'US' ? 'en-US' : language == 'GB' ? 'en-GB' : language,
       );
       const video = new VideoEntity();
       video.id = videoId;
       video.speechText = text;
       this.videoRepository.save(video);
     } catch (e) {
-      this.alertingService.alert(`transcription Error for Video ${videoId}`, AlertStatusEnum.error);
+      this.alertingService.alert(
+        `transcription Error for Video ${videoId}`,
+        AlertStatusEnum.error,
+      );
       console.log(e, language);
-
     }
   }
 
