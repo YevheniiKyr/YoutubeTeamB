@@ -41,20 +41,28 @@ export class DataExtractionService {
     );
   }
 
-  public async backFillYoutubeData(dateFrom: number, dateTo: number, channelId: string): Promise<void> {
-
-    
+  public async backFillYoutubeData(
+    dateFrom: string,
+    dateTo: string,
+    channelId: string,
+  ): Promise<void> {
     await this.saveYoutubeDataToDBByDateRange(
       new Date(dateFrom),
       new Date(dateTo),
+      [channelId],
     );
-
   }
 
-  async saveYoutubeDataToDBByDateRange(startDate: Date, endDate: Date, channelIds?: string[]) {
+  async saveYoutubeDataToDBByDateRange(
+    startDate: Date,
+    endDate: Date,
+    channelIds?: string[],
+  ) {
     const { data } = await this.youtubeApi.channels.list({
       part: ['statistics', 'snippet'],
-      id: this.channelsList.map(({ id }) => id).filter(id=>channelIds ? channelIds.includes(id): true),
+      id: this.channelsList
+        .map(({ id }) => id)
+        .filter((id) => (channelIds ? channelIds.includes(id) : true)),
     });
     let commentCount = 0;
     let videoCount = 0;

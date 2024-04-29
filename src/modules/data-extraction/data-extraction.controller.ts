@@ -1,11 +1,6 @@
-import {
-  Body,
-  Controller,
-  Injectable,
-  ParseIntPipe,
-  Post,
-} from '@nestjs/common';
+import { Body, Controller, Injectable, Post } from '@nestjs/common';
 import { DataExtractionService } from './data-extraction.service';
+import { BackFillYoutubeData } from './dtos/back-fill-youtube-data.dto';
 
 @Controller('data-extraction')
 @Injectable()
@@ -14,10 +9,12 @@ export class DataExtractionController {
 
   @Post('/back-fill-youtube-data')
   async backFillYoutubeData(
-    @Body('dateFrom', ParseIntPipe) dateFrom: number,
-    @Body('dateTo', ParseIntPipe) dateTo: number,
-    @Body('dateTo') channelId: string,
+    @Body() { dateFrom, dateTo, channelId }: BackFillYoutubeData,
   ): Promise<void> {
-    return this.dataExtractionService.backFillYoutubeData(dateFrom, dateTo, channelId);
+    return this.dataExtractionService.backFillYoutubeData(
+      dateFrom,
+      dateTo,
+      channelId,
+    );
   }
 }
