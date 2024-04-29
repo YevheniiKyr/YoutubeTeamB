@@ -21,6 +21,8 @@ import { VideoRepository } from './repositories/video.repository';
         synchronize: false,
         logging: false,
         autoLoadEntities: false,
+        connectionTimeout: 15 * 60 * 1000,
+        requestTimeout: 15 * 60 * 1000,
       }),
       inject: [ConfigService],
     }),
