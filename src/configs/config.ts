@@ -82,7 +82,15 @@ export const appConfig = (): AppConfig => ({
         name: '@RFU',
         id: 'UCcNB1tZYpeDetqCadElv9Ow',
         defaultLanguage: "GB",
+      },
+      {
+        name: '@DJI',
+        id: 'UCsNGtpqGsyw0U6qEG-WHadA',
+        defaultLanguage: "GB",
       }
+
+
+
     ],
   },
   telegram: {
